@@ -34,13 +34,13 @@ body {
 
 
 <h1>Coro</h1>
-<body o>
+<body>
 <canvas id="casesChart" width="400" height="200"></canvas>
-<canvas id="deathChart" width="700" height="250"></canvas>
+<canvas id="deathChart" width="400" height="250"></canvas>
 
 <div class="buttonContainer">
-<button onclick="updateChartdhmy()"> Toggle </button> 
-<p id="p1"> Daily, BiWeekly, Monthly, Yearly</p>
+<button onclick="updateChart()"> Toggle </button> 
+<p id="p1"> Daily, Weekly, BiWeekly, Monthly </p>
 </div>
 
 <script>
@@ -95,10 +95,15 @@ var deathChart = new Chart(ctx2, {
         datasets: [{
             label: '# of deaths',
             data: deaths,
-            borderWidth: 1
+            borderWidth: 1,
+			backgroundColor: "#330000",
+			fill: true
         }]
     },
     options: {
+		tooltips: {
+   		   mode: 'index'
+   				},
         scales: {
             yAxes: [{
                 ticks: {
@@ -109,12 +114,34 @@ var deathChart = new Chart(ctx2, {
     }
 });
 
-function updateChart() { //needs updates
+function updateChart() {
+var startVal = 1;
+var endValue = deaths.length;
+
+if (counter%4==0) {nth=1;document.getElementById("p1").innerHTML = "Daily";}
+if (counter%4==1) {nth=7;document.getElementById("p1").innerHTML = "Weekly";}
+if (counter%4==2) {nth=14;document.getElementById("p1").innerHTML = "Biweekly";}
+if (counter%4==3) {nth=30;document.getElementById("p1").innerHTML = "Monthly";}
+
+counter=counter+1;
+var tempcase = [];
+var tempdeath = [];
+var dats = [];
+for (var i = startVal; i < endValue; i=i+nth) {
+  	tempcase.push(cases[i]);
+    tempdeath.push(deaths[i]);
+    dats.push(dates[i]);
+}
+
 console.log(cases);
-chart1.data.datasets[0].data = cases;
-chart1.data.datasets[1].data = deaths;
-chart1.data.labels = dates;
-chart1.update();
+
+casesChart.data.datasets[0].data = tempcase;
+casesChart.data.labels = dats;
+casesChart.update();
+
+deathChart.data.datasets[0].data = tempdeath;
+deathChart.data.labels = dats;
+deathChart.update();
 }
 
 </script>
