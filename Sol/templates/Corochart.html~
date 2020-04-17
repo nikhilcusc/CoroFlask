@@ -14,7 +14,7 @@
     background-color: powderblue;
     outline-style: double;
 }
-.slider {
+.slider{
     width:80%;
 }
 .buttonContainer {
@@ -41,16 +41,14 @@ body {
 
 <h1>Coro</h1>
 <body>
-
 County Selected: 
-<p id="CN" style="text-align: center; width:100%;  background-color:#65bff5;"> </p>
-
+<p id="CN"> </p>
 <canvas id="casesChart" width="400" height="200"></canvas>
 <canvas id="deathChart" width="400" height="250"></canvas>
 
 <div class="buttonContainer">
-	<button onclick="updateChart()"> Toggle </button> 
-	<p id="p1"> Daily, Weekly, BiWeekly, Monthly </p>
+<button onclick="updateChart()"> Toggle </button> 
+<p id="p1"> Daily, Weekly, BiWeekly, Monthly </p>
 </div>
 
 <script>
