@@ -29,7 +29,6 @@
  	text-align: center;
     width:100%;
     background-color:#65bff5;
-   
 }
 
 body {
@@ -41,6 +40,10 @@ body {
 
 <h1>Coro</h1>
 <body>
+<div class="buttonContainer">
+	<button onclick="window.location='/';"> Go back to Home </button> 
+	<p> If you want to see another county. </p>
+</div>
 
 County Selected: 
 <p id="CN" style="text-align: center; width:100%;  background-color:#65bff5;"> </p>
@@ -54,12 +57,12 @@ County Selected:
 </div>
 
 <script>
-var CountyName = [{% for item in CountyName %}
+
+var CountyData = [{% for item in countyData %}
              "{{item}}",
             {% endfor %}];  // convert the char to int while creating the data array
-
-console.log("County Selected is: "+CountyName); 
-document.getElementById("CN").innerHTML = CountyName;
+console.log("County Selected is: "+CountyData); 
+document.getElementById("CN").innerHTML = CountyData;
 
 var counter=0;
 var dates = [{% for item in dates %}
@@ -74,11 +77,11 @@ var deaths = [{% for item in deaths %}
              parseInt("{{item}}"),
             {% endfor %}];  // convert the char to int while creating the data array
 
-console.log("length of dates: " + dates.length );
-console.log("length of cases: " + cases.length  );
-console.log("length of deaths: " + deaths.length );
+//console.log("length of dates: " + dates.length );
+//console.log("length of cases: " + cases.length  );
+//console.log("length of deaths: " + deaths.length );
 
-//
+//cases Chart
 var ctx = document.getElementById('casesChart').getContext('2d');
 var casesChart = new Chart(ctx, {
     type: 'line',
@@ -104,6 +107,7 @@ var casesChart = new Chart(ctx, {
     }
 });
 
+// deaths Chart
 var ctx2 = document.getElementById('deathChart').getContext('2d');
 var deathChart = new Chart(ctx2, {
     type: 'bar',
@@ -150,7 +154,7 @@ for (var i = startVal; i < endValue; i=i+nth) {
     dats.push(dates[i]);
 }
 
-console.log(cases);
+//console.log(cases);
 
 casesChart.data.datasets[0].data = tempcase;
 casesChart.data.labels = dats;
