@@ -13,5 +13,7 @@
 - [ ] Update to select any county from a drop down.
 	- [ ] Implement drop down over a text box. 
 - [x] Fix reading CountyName from a list.
-- [ ] Add validation checks on County Name.
+- [x] Add empty validation check on entered County Name.
+	- [ ] Improve validation checks. Maybe use a list of countynames and compare if the entered text is one of them?
+- [ ] Stacked charts to show each periods gain increase.
 

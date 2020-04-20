@@ -34,6 +34,11 @@
 body {
   background-color: linen;
 }
+
+canvas {
+height: 150px;
+width: 300px;
+}
 </style>
 </head>
 
@@ -48,8 +53,9 @@ body {
 County Selected: 
 <p id="CN" style="text-align: center; width:100%;  background-color:#65bff5;"> </p>
 
-<canvas id="casesChart" width="400" height="200"></canvas>
-<canvas id="deathChart" width="400" height="250"></canvas>
+<canvas id="casesChart"></canvas>
+<canvas id="deathChart"></canvas>
+
 
 <div class="buttonContainer">
 	<button onclick="updateChart()"> Toggle </button> 

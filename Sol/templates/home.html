@@ -12,7 +12,13 @@
 		Click here for Coronavirus Charts of Los Angeles.
 		</a>
 	</div-->
-
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+	{% for message in messages %}
+		<h6> {{ message }} </h6>
+	{% endfor %}
+{% endif %}
+{% endwith %}
 
     <footer style="color:#828e82; background-color: #fcfaf4; padding: 10px; text-align: center;">
 		<p>
@@ -20,4 +26,5 @@
 		</p>
 	</footer>
 {% endblock content %}
+
 
