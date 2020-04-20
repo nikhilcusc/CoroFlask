@@ -10,7 +10,7 @@ import urllib2
 rawURL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
 
 app = Flask(__name__)
-app.secret_key = 'EcCbAbg7nZ'
+app.secret_key = 'EcCbAbg7nZ' #haha not so secret!
 
 # validation
 class Validation(Form):
@@ -25,7 +25,7 @@ def Corochart():
 	#get county name
 	CountyName = request.form['county']
 	#validate the CountyName here
-	validation = Validation(request.form) #rumor has it, this will capture the county
+	validation = Validation(request.form) 
 	
 	if not validation.validate(): # empty county Name 
 		flash('Empty text box')
@@ -44,5 +44,14 @@ def Corochart():
 	cases=[row[4] for row in countyData]
 	deaths=[row[5] for row in countyData]
 	row = countyData[0]
+	
+	#Cases daily change
+	stackedCases=[0]
+	trailingSumStackedCases=[0]
+	for ind in range(1,len(countyData)):
+		#print(countyData[ind][4], countyData[ind-1][4])
+		stackedCases.append( int(countyData[ind][4]) - int(countyData[ind-1][4]))
+		trailingSumStackedCases.append(int(countyData[ind-1][4]))
+
 	county = [row[1],row[2]]
-	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, deaths=deaths)
+	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases, trailingSumStackedCases=trailingSumStackedCases, deaths=deaths)

@@ -53,9 +53,9 @@ width: 300px;
 County Selected: 
 <p id="CN" style="text-align: center; width:100%;  background-color:#65bff5;"> </p>
 
-<canvas id="casesChart"></canvas>
-<canvas id="deathChart"></canvas>
-
+<canvas id="casesChart">	</canvas>
+<canvas id="deathChart">	</canvas>
+<canvas id="stackedCasesChart">	</canvas>
 
 <div class="buttonContainer">
 	<button onclick="updateChart()"> Toggle </button> 
@@ -170,6 +170,44 @@ deathChart.data.datasets[0].data = tempdeath;
 deathChart.data.labels = dats;
 deathChart.update();
 }
+
+//stackedChart here
+var stackedCases = [{% for item in stackedCases %}
+             parseInt("{{item}}"),
+            {% endfor %}];  // convert the char to int while creating the data array
+var trailingSumStackedCases= [{% for item in trailingSumStackedCases %}
+             parseInt("{{item}}"),
+            {% endfor %}];  
+            
+var ctx3 = document.getElementById('stackedCasesChart').getContext('2d');
+var deathChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: '# cummulative cases till date',
+            data: trailingSumStackedCases,
+			backgroundColor: "#f5ef42",
+        },
+        {
+            label: '# of new cases on this date',
+            data: stackedCases,
+			backgroundColor: "#f543bcs",
+        },
+        
+        ]
+    },
+    options: {
+		tooltips: {
+   		   mode: 'index'
+   				},
+        scales: {
+        	xAxes: [{stacked: true}], 
+            yAxes: [{stacked: true},
+            	{ticks: {beginAtZero: true}}]
+        }
+    }
+});
 
 </script>
 
