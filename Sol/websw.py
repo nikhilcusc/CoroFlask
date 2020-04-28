@@ -53,5 +53,14 @@ def Corochart():
 		stackedCases.append( int(countyData[ind][4]) - int(countyData[ind-1][4]))
 		trailingSumStackedCases.append(int(countyData[ind-1][4]))
 
+	#Deaths daily change
+	stackedDeaths=[0]
+	trailingSumStackedDeaths=[0]
+	for ind in range(1,len(countyData)):
+		#print(countyData[ind][4], countyData[ind-1][4])
+		stackedDeaths.append( int(countyData[ind][5]) - int(countyData[ind-1][5]))
+		trailingSumStackedDeaths.append(int(countyData[ind-1][5]))
+
+
 	county = [row[1],row[2]]
-	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases, trailingSumStackedCases=trailingSumStackedCases, deaths=deaths)
+	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases,  trailingSumStackedCases=trailingSumStackedCases, deaths=deaths, stackedDeaths=stackedDeaths, trailingSumStackedDeaths=trailingSumStackedDeaths)
