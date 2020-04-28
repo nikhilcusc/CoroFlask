@@ -30,7 +30,9 @@
     width:100%;
     background-color:#65bff5;
 }
-
+h1 {
+	text-align: center;
+}
 body {
   background-color: linen;
 }
@@ -53,14 +55,13 @@ width: 900px !important;
 County Selected: 
 <p id="CN" style="text-align: center; width:100%;  background-color:#65bff5;"> </p>
 
-<canvas id="casesChart">	</canvas>
-<canvas id="deathChart">	</canvas>
 <canvas id="stackedCasesChart">	</canvas>
 <canvas id="stackedDeathsChart"> </canvas>
 
 <div class="buttonContainer">
-	<button onclick="updateChart()"> Toggle </button> 
-	<p id="p1"> Daily, Weekly, BiWeekly, Monthly </p>
+	<p> See averages </p>
+	<button onclick="updateStackedCharts()"> Toggle </button> 
+	<p id="p1"> Daily, 3-day, Weekly, BiWeekly, Monthly </p>
 </div>
 
 <script>
@@ -76,101 +77,7 @@ var dates = [{% for item in dates %}
              "{{item}}",
             {% endfor %}];  // convert the char to int while creating the data array
 
-var cases = [{% for item in cases %}
-             parseInt("{{item}}"),
-            {% endfor %}];  // convert the char to int while creating the data array
 
-var deaths = [{% for item in deaths %}
-             parseInt("{{item}}"),
-            {% endfor %}];  // convert the char to int while creating the data array
-
-//console.log("length of dates: " + dates.length );
-//console.log("length of cases: " + cases.length  );
-//console.log("length of deaths: " + deaths.length );
-
-//cases Chart
-var ctx = document.getElementById('casesChart').getContext('2d');
-var casesChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: dates,
-        datasets: [{
-            label: '# of cases',
-            data: cases,
-			yAxisId: 'Cases',
-			xAxisId: 'Date',
-			borderColor: "#3e94cd",
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-// deaths Chart
-var ctx2 = document.getElementById('deathChart').getContext('2d');
-var deathChart = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: dates,
-        datasets: [{
-            label: '# of deaths',
-            data: deaths,
-            borderWidth: 1,
-			backgroundColor: "#330000",
-			fill: true
-        }]
-    },
-    options: {
-		tooltips: {
-   		   mode: 'index'
-   				},
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-
-function updateChart() {
-var startVal = 1;
-var endValue = deaths.length;
-
-if (counter%4==0) {nth=1;document.getElementById("p1").innerHTML = "Daily";}
-if (counter%4==1) {nth=7;document.getElementById("p1").innerHTML = "Weekly";}
-if (counter%4==2) {nth=14;document.getElementById("p1").innerHTML = "Biweekly";}
-if (counter%4==3) {nth=30;document.getElementById("p1").innerHTML = "Monthly";}
-
-counter=counter+1;
-var tempcase = [];
-var tempdeath = [];
-var dats = [];
-for (var i = startVal; i < endValue; i=i+nth) {
-  	tempcase.push(cases[i]);
-    tempdeath.push(deaths[i]);
-    dats.push(dates[i]);
-}
-
-//console.log(cases);
-
-casesChart.data.datasets[0].data = tempcase;
-casesChart.data.labels = dats;
-casesChart.update();
-
-deathChart.data.datasets[0].data = tempdeath;
-deathChart.data.labels = dats;
-deathChart.update();
-}
 
 //stackedChart here
 var stackedCases = [{% for item in stackedCases %}
@@ -204,8 +111,7 @@ var stackedCasesChart = new Chart(ctx3, {
    				},
         scales: {
         	xAxes: [{stacked: true}], 
-            yAxes: [{stacked: true},
-            	{ticks: {beginAtZero: true}}]
+            yAxes: [{stacked: true}]
         }
     }
 });
@@ -216,6 +122,7 @@ var stackedDeaths = [{% for item in stackedDeaths %}
 var trailingSumStackedDeaths= [{% for item in trailingSumStackedDeaths %}
              parseInt("{{item}}"),
             {% endfor %}];
+
 var ctx4 = document.getElementById('stackedDeathsChart').getContext('2d');
 var stackedDeathsChart = new Chart(ctx4, {
     type: 'bar',
@@ -240,11 +147,46 @@ var stackedDeathsChart = new Chart(ctx4, {
    				},
         scales: {
         	xAxes: [{stacked: true}], 
-            yAxes: [{stacked: true},
-            	{ticks: {beginAtZero: true}}]
+            yAxes: [{stacked: true}]
         }
     }
 });
+
+function updateStackedCharts() {
+
+var endValue = stackedDeaths.length;
+
+if (counter%5==0) {nth=1;document.getElementById("p1").innerHTML = "Daily";}
+if (counter%5==1) {nth=3;document.getElementById("p1").innerHTML = "3-day period";}
+if (counter%5==2) {nth=7;document.getElementById("p1").innerHTML = "Weekly";}
+if (counter%5==3) {nth=14;document.getElementById("p1").innerHTML = "Biweekly";}
+if (counter%5==4) {nth=30;document.getElementById("p1").innerHTML = "Monthly";}
+
+counter=counter+1;
+var tempcase = [[],[]];
+var tempdeath = [[],[]];
+var dats = [];
+for (var i = 0; i < endValue; i=i+nth) {
+  	tempcase[0].push(trailingSumStackedCases[i]);
+  	tempcase[1].push(stackedCases[i]);
+  	
+    tempdeath[0].push(trailingSumStackedDeaths[i]);
+    tempdeath[1].push(stackedDeaths[i]);
+    dats.push(dates[i]);
+}
+
+//console.log(cases);
+
+stackedCasesChart.data.datasets[0].data = tempcase[0];
+stackedCasesChart.data.datasets[1].data = tempcase[1];
+stackedCasesChart.data.labels = dats;
+stackedCasesChart.update();
+
+stackedDeathsChart.data.datasets[0].data = tempdeath[0];
+stackedDeathsChart.data.datasets[1].data = tempdeath[1];
+stackedDeathsChart.data.labels = dats;
+stackedDeathsChart.update();
+}
 
 
 </script>
