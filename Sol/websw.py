@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Markup, request, flash
+from flask import Flask, render_template, Markup, request, flash, jsonify
 from flask_inputs import Inputs
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms.validators import DataRequired
@@ -15,6 +15,14 @@ app.secret_key = 'EcCbAbg7nZ' #haha not so secret!
 # validation
 class Validation(Form):
     county = StringField('county', [validators.DataRequired()])
+
+@app.route('/_add_numbers')
+def add_numbers():
+	a = request.args.get('a', 0, type=int)
+	b = request.args.get('b', 0, type=int)
+	result = a + b
+	return jsonify(result)
+	#return jsonify({'res':result})
 
 @app.route('/')
 def home():

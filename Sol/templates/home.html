@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content  %}
+
+	
 	<label for="Cities">Choose a County:</label>
 
 	<form action="{{ url_for('Corochart')}}" method="post">
@@ -19,6 +21,53 @@
 	{% endfor %}
 {% endif %}
 {% endwith %}
+
+
+<h4>jQuery Example</h4>
+<p><input type=text size=5 id="a" value=""> +
+   <input type=text size=5 id="b" value=""> =
+   <span id="result"> </span>
+<a onclick=func(this) href=# id="calculate">calculate server side</a>
+
+<script type=text/javascript>
+/*
+	  $(function() {
+		$('a#calculate').bind('click', function() {
+		  $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+		    a: $('input[name="a"]').val(),
+		    b: $('input[name="b"]').val()
+		  }, function(data) {
+		    $("#result").text(data.result);
+		  });
+		  return false;
+		});
+	  });
+*/
+function func(){
+	var a = document.getElementById("a").value;
+	var b = document.getElementById("b").value;
+
+	//console.log('in func1', a , b);
+	let xhr = new XMLHttpRequest();
+    let url = "/_add_numbers?a=" + a + "&b=" + b ;
+    xhr.open("GET", url, true); 
+    
+    //xhr.setRequestHeader("Content-Type", "application/json");
+    //xhr.responseType = 'json';
+    
+    xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4
+		    && xhr.status === 200) {
+		    //var res = JSON.parse( this.responseText)["res"];
+		    var res = this.responseText;
+		    document.getElementById("result").innerHTML = res;
+				}
+			}
+		
+	xhr.send();
+	}
+</script>
+<p>
 
     <footer style="color:#828e82; background-color: #fcfaf4; padding: 10px; text-align: center;">
 		<p>

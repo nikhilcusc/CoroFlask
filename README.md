@@ -1,5 +1,10 @@
 # CoroFlask
 
+Visualizing Coronavirus cases and deaths using Flask and ChartJS for US counties. 
+While most of the websites (like (The New York Times)[https://www.nytimes.com/interactive/2020/us/california-coronavirus-cases.html#cases] at the time of building this) focus on showing graphs for states and countries, I wanted to see graphs for each county. 
+
+I have also changed the way graphs display data. I wanted to see total number of cases and new cases in one graph. So, each day will have sum of cases till day and at the top count of number of cases for that day in a different colour. 
+
 ## Source
 (NYT)[https://github.com/nytimes/covid-19-data]
 
@@ -10,19 +15,20 @@
 
 ### TODO list:
 
-	- [x] Get both the charts displaying.
-	- [x] Update 'updateChart' function to toggle between daily, weekly, biweekly avergaes.
-		- [x] Add 3-day period for completeness.
-	- [x] Add a back button. 
-	- [ ] Update to select any county from a drop down. (new branch)
-		- [ ] Implement drop down over a text box. 
-	- [x] Fix reading CountyName from a list.
-	- [x] Add empty validation check on entered County Name.
-		- [ ] Improve validation checks. Maybe use a list of countynames and compare if the entered text is one of them?
-	- [x] Stacked charts to show each periods gain increase.
-		- [x] Add stacked chart for deaths.
-	- [x] Fix width of graphs. Now they are going to the end of browser window.
-	- [x] UpdateChart function to update the stacked charts.
-	- [x] Remove old non stacked charts.
-		- [ ] Maybe give user option to select if they want to see stacked or not? 
-	- [x] Remove second y axis on stacked graphs.
+- [x] Get both the charts displaying.
+- [x] Update 'updateChart' function to toggle between daily, weekly, biweekly avergaes.
+	- [x] Add 3-day period for completeness.
+	- [ ] Take averages instead of showing just the dates's values.
+- [x] Add a back button. 
+- [ ] Update to select any county from a drop down. (new branch)
+	- [ ] Implement drop down over a text box. 
+- [x] Fix reading CountyName from a list.
+- [x] Add empty validation check on entered County Name.
+	- [ ] Improve validation checks. Maybe use a list of countynames and compare if the entered text is one of them?
+- [x] Stacked charts to show each periods gain increase.
+	- [x] Add stacked chart for deaths.
+- [x] Fix width of graphs. Now they are going to the end of browser window.
+- [x] UpdateChart function to update the stacked charts.
+- [x] Remove old non stacked charts.
+	- [ ] Maybe give user option to select if they want to see stacked or not? 
+- [x] Remove second y axis on stacked graphs.
