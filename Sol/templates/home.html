@@ -2,12 +2,12 @@
 {% block content  %}
 
 	
-	<label for="Cities">Choose a County:</label>
+<!--label for="Cities">Choose a County:</label>
 
-	<form action="{{ url_for('Corochart')}}" method="post">
-		County Name: <input type="text" name="county"> <br>
-		<input type="submit" value="submit">
-	</form>
+<form action="{{ url_for('Corochart')}}" method="post">
+	County Name: <input type="text" name="county"> <br>
+	<input type="submit" value="submit">
+</form-->
 
 	<!--div class="navbar-nav mr-auto">
 		<a class="nav-item nav-link" href="{{ url_for('Corochart')}}"> 
@@ -21,6 +21,20 @@
 	{% endfor %}
 {% endif %}
 {% endwith %}
+
+
+<form action="{{ url_for('Corochart')}}" method="get">
+	
+	<select id="county" name="county">
+	  
+	  <option value="Maricopa" selected>Maricopa</option>
+	  <option value="Santa Clara">Santa Clara</option>
+	  <option value="Los Angeles">Los Angeles</option>
+	  
+	</select>
+		<input type="submit" value="submit">
+
+</form>
 
 
 <h4>jQuery Example</h4>

@@ -3,7 +3,7 @@
 Visualizing Coronavirus cases and deaths using Flask and ChartJS for US counties. 
 While most of the websites (like (The New York Times)[https://www.nytimes.com/interactive/2020/us/california-coronavirus-cases.html#cases] at the time of building this) focus on showing graphs for states and countries, I wanted to see graphs for each county. 
 
-I have also changed the way graphs display data. I wanted to see total number of cases and new cases in one graph. So, each day will have sum of cases till day and at the top count of number of cases for that day in a different colour. 
+I have also changed the way graphs display data. I wanted to see total number of cases and new cases in one graph. So, each day will have sum of cases till day and at the top count of number of cases for that day in a different colour. Adding the heights of both the bars would give the total count till date.
 
 ## Source
 (NYT)[https://github.com/nytimes/covid-19-data]
@@ -32,3 +32,6 @@ I have also changed the way graphs display data. I wanted to see total number of
 - [x] Remove old non stacked charts.
 	- [ ] Maybe give user option to select if they want to see stacked or not? 
 - [x] Remove second y axis on stacked graphs.
+
+### Notes:
+1. Flask can pull data from Select tag only using name attribute. Does not work for id tag.

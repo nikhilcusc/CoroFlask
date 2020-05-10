@@ -1,0 +1,29 @@
+<head>
+  <meta charset="utf-8" />
+  <title>Coro Viz</title>
+  <!-- import plugin script -->
+  <script src='static/Chart.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0/Chart.min.js"></script>
+</head>
+
+
+<h1>Test Drop Down</h1>
+<body>
+
+County Selected: 
+<p id="CN" style="text-align: center; width:100%; background-color:#65bff5;"> </p>
+
+
+
+<script>
+
+var CountyData = [{% for item in countyData %}
+             "{{item}}",
+            {% endfor %}];  // convert the char to int while creating the data array
+console.log("County Selected is: "+CountyData); 
+document.getElementById("CN").innerHTML = CountyData;
+
+
+</script>
+
+</body>

@@ -1,4 +1,6 @@
+from __future__ import print_function
 from flask import Flask, render_template, Markup, request, flash, jsonify
+
 from flask_inputs import Inputs
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms.validators import DataRequired
@@ -6,6 +8,7 @@ from wtforms.validators import DataRequired
 import pandas as pd
 import csv
 import urllib2
+import sys
 
 rawURL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
 
@@ -27,9 +30,21 @@ def add_numbers():
 @app.route('/')
 def home():
     return render_template('home.html')
+	
+@app.route('/Corochart', methods=['GET'])
+def Corochart():
+	#CountyNameDD = 'Maricopa'
+	#CountyNameDD = request.form.get('county')
+	CountyNameDD = request.args.get("county")
+	CountyName = CountyNameDD 
+	
+	
+	return render_template('testDropDown.html',title='testDropDown', countyData=CountyNameDD)
 
+'''	
 @app.route('/Corochart', methods=['POST'])
 def Corochart():
+	
 	#get county name
 	CountyName = request.form['county']
 	#validate the CountyName here
@@ -72,3 +87,4 @@ def Corochart():
 
 	county = [row[1],row[2]]
 	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases,  trailingSumStackedCases=trailingSumStackedCases, deaths=deaths, stackedDeaths=stackedDeaths, trailingSumStackedDeaths=trailingSumStackedDeaths)
+'''

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The select element</h1>
+
+<p id="j">The select element is used to create a drop-down list:</p>
+
+<label for="cars">Choose a car:</label>
+
+<select id="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+<a onclick=func(this) href=# id="calculate">Change p.</a>
+
+<script>
+function func(){
+	var carSelected = document.getElementById("cars").value;
+  	document.getElementById("j").innerHTML =  carSelected;
+    }
+</script>
+</body>
+</html>
