@@ -25,11 +25,10 @@
 
 <form action="{{ url_for('Corochart')}}" method="get">
 	
-	<select id="county" name="county">
+	<select id="state1" name="state1">
 	  
-	  <option value="Maricopa" selected>Maricopa</option>
-	  <option value="Santa Clara">Santa Clara</option>
-	  <option value="Los Angeles">Los Angeles</option>
+	  <option value="Arizona" selected>Arizona</option>
+	  <option value="California">California</option>
 	  
 	</select>
 		<input type="submit" value="submit">
@@ -38,11 +37,26 @@
 
 
 <h4>jQuery Example</h4>
-<p><input type=text size=5 id="a" value=""> +
-   <input type=text size=5 id="b" value=""> =
-   <span id="result"> </span>
-<a onclick=func(this) href=# id="calculate">calculate server side</a>
+<p><select id="state" name="state">
+	  
+	  <option value="Arizona" selected>Arizona</option>
+	  <option value="California">California</option>
+	  
+	</select> 
+</p> 
 
+
+<span id="result"> </span>
+	<a onclick=func(this) href=# id="calculate">Get counties</a>
+
+<p>
+<select id="counties" name="counties" class='counties'>
+	  
+	  
+	  
+	  
+	</select>
+</p>
 <script type=text/javascript>
 /*
 	  $(function() {
@@ -58,12 +72,11 @@
 	  });
 */
 function func(){
-	var a = document.getElementById("a").value;
-	var b = document.getElementById("b").value;
-
-	//console.log('in func1', a , b);
+	var stateSelected = document.getElementById("state").value;
+	console.log('in func', state);
+	
 	let xhr = new XMLHttpRequest();
-    let url = "/_add_numbers?a=" + a + "&b=" + b ;
+    let url = "/_getCounties?state=" + stateSelected ;
     xhr.open("GET", url, true); 
     
     //xhr.setRequestHeader("Content-Type", "application/json");
@@ -74,7 +87,24 @@ function func(){
 		    && xhr.status === 200) {
 		    //var res = JSON.parse( this.responseText)["res"];
 		    var res = this.responseText;
-		    document.getElementById("result").innerHTML = res;
+		    // populate the county drop down
+			var countyList  = JSON.parse(res);
+			countyList = countyList.countyListNames;
+			//console.log(countyList); countylist needs to be put in select options
+			//document.getElementById("result").innerHTML = res;
+			var options = [];
+			for (var i=0, l=countyList.length; i<l; i++)
+				{
+				//options.push('<options value="'+countyList[i]+'">'+countyList[i]+'<options>');
+				var opt = document.createElement('option');
+
+				opt.text = newSel.options[i].text;
+				opt.value = newSel.options[i].value;
+
+				oldSel.add(opt, null);
+				}
+			console.log(options);
+			
 				}
 			}
 		

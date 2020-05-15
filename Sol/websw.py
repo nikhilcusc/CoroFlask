@@ -19,13 +19,26 @@ app.secret_key = 'EcCbAbg7nZ' #haha not so secret!
 class Validation(Form):
     county = StringField('county', [validators.DataRequired()])
 
-@app.route('/_add_numbers')
-def add_numbers():
-	a = request.args.get('a', 0, type=int)
-	b = request.args.get('b', 0, type=int)
-	result = a + b
-	return jsonify(result)
-	#return jsonify({'res':result})
+@app.route('/_getCounties')
+def getCounties():
+	stateSelected = request.args.get('state')
+	
+	#get the rawdata from website
+	response = urllib2.urlopen(rawURL)
+	cr = csv.reader(response)
+	
+	countyList= []
+	for row in cr:
+		#print(row)
+		try:
+			if row[2]==stateSelected and not (row[1] in countyList):
+				countyList.append(row[1])
+		except IndexError:
+			continue
+	
+	result = countyList;
+	return jsonify({"countyListNames":result})
+	
 
 @app.route('/')
 def home():

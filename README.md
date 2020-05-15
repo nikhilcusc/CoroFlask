@@ -34,4 +34,4 @@ I have also changed the way graphs display data. I wanted to see total number of
 - [x] Remove second y axis on stacked graphs.
 
 ### Notes:
-1. Flask can pull data from Select tag only using name attribute. Does not work for id tag.
+1. Flask can pull data from Select tag only using name attribute. Does not work for id attribute.
