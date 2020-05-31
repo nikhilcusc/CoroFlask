@@ -22,21 +22,7 @@
 {% endif %}
 {% endwith %}
 
-
-<form action="{{ url_for('Corochart')}}" method="get">
-	
-	<select id="state1" name="state1">
-	  
-	  <option value="Arizona" selected>Arizona</option>
-	  <option value="California">California</option>
-	  
-	</select>
-		<input type="submit" value="submit">
-
-</form>
-
-
-<h4>jQuery Example</h4>
+<h4>Select state</h4>
 <p><select id="state" name="state">
 	  
 	  <option value="Arizona" selected>Arizona</option>
@@ -45,18 +31,26 @@
 	</select> 
 </p> 
 
-
 <span id="result"> </span>
 	<a onclick=func(this) href=# id="calculate">Get counties</a>
 
-<p>
-<select id="counties" name="counties" class='counties'>
-	  
-	  
-	  
+<br>
+<br>
+<br>
+<form action="{{ url_for('Corochart')}}" method="get">
+	
+	<select id="counties" name="counties">
 	  
 	</select>
-</p>
+		<input type="submit" value="submit">
+
+</form>
+
+
+
+
+
+
 <script type=text/javascript>
 /*
 	  $(function() {
@@ -90,21 +84,15 @@ function func(){
 		    // populate the county drop down
 			var countyList  = JSON.parse(res);
 			countyList = countyList.countyListNames;
-			//console.log(countyList); countylist needs to be put in select options
+			console.log(countyList);// countylist needs to be put in select options
 			//document.getElementById("result").innerHTML = res;
 			var options = [];
 			for (var i=0, l=countyList.length; i<l; i++)
 				{
-				//options.push('<options value="'+countyList[i]+'">'+countyList[i]+'<options>');
-				var opt = document.createElement('option');
-
-				opt.text = newSel.options[i].text;
-				opt.value = newSel.options[i].value;
-
-				oldSel.add(opt, null);
+				options.push('<option value="'+countyList[i]+'">'+countyList[i]+'</option>');
 				}
 			console.log(options);
-			
+			$("#counties").html(options);
 				}
 			}
 		
@@ -115,7 +103,7 @@ function func(){
 
     <footer style="color:#828e82; background-color: #fcfaf4; padding: 10px; text-align: center;">
 		<p>
-			This is built using Charts JS.
+			This is built using Flask and Charts JS.
 		</p>
 	</footer>
 {% endblock content %}

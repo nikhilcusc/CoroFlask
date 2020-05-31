@@ -36,37 +36,40 @@ def getCounties():
 		except IndexError:
 			continue
 	
-	result = countyList;
-	return jsonify({"countyListNames":result})
+	#result = countyList;
+	return jsonify({"countyListNames":countyList})
 	
 
 @app.route('/')
 def home():
     return render_template('home.html')
-	
+
+'''	
 @app.route('/Corochart', methods=['GET'])
 def Corochart():
 	#CountyNameDD = 'Maricopa'
 	#CountyNameDD = request.form.get('county')
-	CountyNameDD = request.args.get("county")
+	CountyNameDD = request.args.get("counties")
 	CountyName = CountyNameDD 
-	
+	CountyName.replace(",", "")
 	
 	return render_template('testDropDown.html',title='testDropDown', countyData=CountyNameDD)
+'''
 
-'''	
-@app.route('/Corochart', methods=['POST'])
+@app.route('/Corochart', methods=['GET'])
 def Corochart():
 	
 	#get county name
-	CountyName = request.form['county']
+	CountyName = request.args.get("counties")
+	'''
+	Because we are getting names from the list, we don't need validation
 	#validate the CountyName here
 	validation = Validation(request.form) 
 	
 	if not validation.validate(): # empty county Name 
 		flash('Empty text box')
 		return render_template('home.html')
-	
+	'''
 	#get the rawdata from website
 	response = urllib2.urlopen(rawURL)
 	cr = csv.reader(response)
@@ -100,4 +103,3 @@ def Corochart():
 
 	county = [row[1],row[2]]
 	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases,  trailingSumStackedCases=trailingSumStackedCases, deaths=deaths, stackedDeaths=stackedDeaths, trailingSumStackedDeaths=trailingSumStackedDeaths)
-'''
