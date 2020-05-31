@@ -20,11 +20,11 @@ I have also changed the way graphs display data. I wanted to see total number of
 	- [x] Add 3-day period for completeness.
 	- [ ] Take averages instead of showing just the dates's values.
 - [x] Add a back button. 
-- [ ] Update to select any county from a drop down. (new branch)
+- [x] Update to select any county from a drop down. (new branch)
 	- [x] Implement drop down over a text box.
 		- [x] Get county names based on state selected.
 		- [x] Use this county name to display the charts.
-		- [ ] Include all US states. Currently, Arizona and California are only selectable.
+		- [x] Include all US states. ~Currently, Arizona and California are only selectable.~
 	- [ ] Extend this to include other countries, if possible!
 - [x] Fix reading CountyName from a list.
 - [x] Add empty validation check on entered County Name.
