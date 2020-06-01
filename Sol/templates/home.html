@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 {% block content  %}
 
@@ -9,40 +10,47 @@
 	{% endfor %}
 {% endif %}
 {% endwith %}
+<body onload=funcM() >
+<div class='mainDiv'>
+	<div class='Div1'>
+		<h4>Select country</h4>
+		<p>
+			<select id="country" name="country" onchange=funcCountry(this)>
+			  <option value="All" selected>All</option>
+			  <option value="US">United States</option>
+			</select> 
+		</p>
+	</div>
+	<!--a onclick= href=# id="calculate">Get states</a-->
+	<div class='Div2'>
 
-<h4>Select country</h4>
-<p>
-	<select id="country" name="country">
-	  <option value="US" selected>United States</option>
-	</select> 
-</p>
+		<h4>Select state</h4>
+		<p>
+			<select id="state" name="state"  onchange=funcCounty(this) >
+			  <option value="" selected>select</option>
+			</select> 
+		</p> 
 
-<a onclick=funcCountry(this) href=# id="calculate">Get states</a>
-
-<h4>Select state</h4>
-<p>
-	<select id="state" name="state">
-	  
-	</select> 
-</p> 
-
-<span id="result"> </span>
-	<a onclick=funcCounty(this) href=# id="calculate">Get counties</a>
-
-<br>
-<br>
-<br>
-<form action="{{ url_for('Corochart')}}" method="get">
-	
-	<select id="counties" name="counties">
-	  
-	</select>
-		<input type="submit" value="submit">
-
-</form>
-
-
+	</div>
+	<div class='Div3'>
+		<h4>Select state</h4>
+		
+		<form action="{{ url_for('Corochart')}}" method="get">
+			
+			<select id="counties" name="counties">
+			  <!--option value="" selected>select</option-->
+			</select>
+				<input type="submit" value="submit">
+			
+		</form>
+	</div>
+</div>
 <script type=text/javascript>
+
+function funcM(){
+		//alert('S');
+		// Get all countries here
+}
 
 function funcCountry(){
 	var countrySelected = document.getElementById("country").value;
@@ -115,3 +123,4 @@ function funcCounty(){
 {% endblock content %}
 
 
+</body>

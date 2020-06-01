@@ -72,10 +72,11 @@ def Corochart():
 	'''
 	Because we are getting names from the list, we don't need validation
 	#validate the CountyName here
+	
 	validation = Validation(request.form) 
 	
 	if not validation.validate(): # empty county Name 
-		flash('Empty text box')
+		flash('box empty')
 		return render_template('home.html')
 	'''
 	#get the rawdata from website
