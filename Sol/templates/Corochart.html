@@ -38,9 +38,9 @@
 	}
 
 	canvas {
-	height: 450px !important;
-	width: 900px !important;
-	border:1px solid #d3d3d3;
+	height: 50% !important;
+	width: 90% !important;
+	border: 2px solid #d3d3d3;
 	}
 	</style>
 </head>
@@ -153,7 +153,10 @@
 				}
 			}
 		});
-
+		function getAverages(arr, i, nth){
+				chunck = arr.slice(i,i+nth);
+				return (chunck.reduce((s, n) => s + n) / chunck.length)
+		}
 		function updateStackedCharts() {
 
 			var endValue = stackedDeaths.length;
@@ -169,11 +172,13 @@
 			var tempdeath = [[],[]];
 			var dats = [];
 			for (var i = 0; i < endValue; i=i+nth) {
-				tempcase[0].push(trailingSumStackedCases[i]);
-				tempcase[1].push(stackedCases[i]);
 				
-				tempdeath[0].push(trailingSumStackedDeaths[i]);
-				tempdeath[1].push(stackedDeaths[i]);
+				tempcase[0].push(getAverages(trailingSumStackedCases,i,nth));
+				
+				tempcase[1].push(getAverages(stackedCases,i,nth));
+				
+				tempdeath[0].push(getAverages(trailingSumStackedDeaths,i,nth));
+				tempdeath[1].push(getAverages(stackedDeaths,i,nth));
 				dats.push(dates[i]);
 			}
 

@@ -9,8 +9,10 @@ I have also changed the way graphs display data. I wanted to see total number of
 (NYT)[https://github.com/nytimes/covid-19-data]
 
 ### Screenshots
+![Landing Page](/Screenshots/LandingPage2.jpg)
 ![ScreenShot2020-04-28142438.jpg](/Screenshots/ScreenShot2020-04-28142438.jpg)
-![Screen Shot 19-04-2020](/Screenshots/ScreenShot2020-04-19214043.jpg)
+![3-Day Average LA](/Screenshots/ScreenShot2020-06-02220118.jpg)
+![Weekly Average LA](/Screenshots/ScreenShot2020-06-02220819.jpg)
 
 
 ### TODO list:
@@ -18,7 +20,7 @@ I have also changed the way graphs display data. I wanted to see total number of
 - [x] Get both the charts displaying.
 - [x] Update 'updateChart' function to toggle between daily, weekly, biweekly avergaes.
 	- [x] Add 3-day period for completeness.
-	- [ ] Take averages instead of showing just the dates's values.
+	- [x] Take averages instead of showing just the dates's values.
 - [x] Add a back button. 
 - [x] Update to select any county from a drop down. (new branch)
 	- [x] Implement drop down over a text box.
