@@ -1,4 +1,6 @@
-from flask import Flask, render_template, Markup, request, flash
+from __future__ import print_function
+from flask import Flask, render_template, Markup, request, flash, jsonify
+
 from flask_inputs import Inputs
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms.validators import DataRequired
@@ -6,6 +8,7 @@ from wtforms.validators import DataRequired
 import pandas as pd
 import csv
 import urllib2
+import sys
 
 rawURL = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv'
 
@@ -16,21 +19,66 @@ app.secret_key = 'EcCbAbg7nZ' #haha not so secret!
 class Validation(Form):
     county = StringField('county', [validators.DataRequired()])
 
+@app.route('/_getStates')
+def getStates():
+	stateSelected = request.args.get('country')
+	
+	#get the rawdata from website
+	response = urllib2.urlopen(rawURL)
+	cr = csv.reader(response)
+	
+	statesList= []
+	for row in cr:
+		#print(row)
+		try:
+			if row[2] not  in statesList :
+				statesList.append(row[2])
+		except IndexError:
+			continue
+	statesList = statesList[1:] #remove header "states" from the list
+	return jsonify({"statesListNames":statesList})
+
+@app.route('/_getCounties')
+def getCounties():
+	stateSelected = request.args.get('state')
+	
+	#get the rawdata from website
+	response = urllib2.urlopen(rawURL)
+	cr = csv.reader(response)
+	
+	countyList= []
+	for row in cr:
+		#print(row)
+		try:
+			if row[2]==stateSelected and not (row[1] in countyList):
+				countyList.append(row[1])
+		except IndexError:
+			continue
+	
+	#result = countyList;
+	return jsonify({"countyListNames":countyList})
+	
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/Corochart', methods=['POST'])
+
+@app.route('/Corochart', methods=['GET'])
 def Corochart():
+	
 	#get county name
-	CountyName = request.form['county']
+	CountyName = request.args.get("counties")
+	'''
+	Because we are getting names from the list, we don't need validation
 	#validate the CountyName here
+	
 	validation = Validation(request.form) 
 	
 	if not validation.validate(): # empty county Name 
-		flash('Empty text box')
+		flash('box empty')
 		return render_template('home.html')
-	
+	'''
 	#get the rawdata from website
 	response = urllib2.urlopen(rawURL)
 	cr = csv.reader(response)
@@ -61,6 +109,6 @@ def Corochart():
 		stackedDeaths.append( int(countyData[ind][5]) - int(countyData[ind-1][5]))
 		trailingSumStackedDeaths.append(int(countyData[ind-1][5]))
 
-
 	county = [row[1],row[2]]
+	
 	return render_template('Corochart.html',title='Corochart', countyData=county, dates=dates, cases=cases, stackedCases=stackedCases,  trailingSumStackedCases=trailingSumStackedCases, deaths=deaths, stackedDeaths=stackedDeaths, trailingSumStackedDeaths=trailingSumStackedDeaths)

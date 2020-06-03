@@ -1,17 +1,8 @@
+
 {% extends "layout.html" %}
 {% block content  %}
-	<label for="Cities">Choose a County:</label>
 
-	<form action="{{ url_for('Corochart')}}" method="post">
-		County Name: <input type="text" name="county"> <br>
-		<input type="submit" value="submit">
-	</form>
-
-	<!--div class="navbar-nav mr-auto">
-		<a class="nav-item nav-link" href="{{ url_for('Corochart')}}"> 
-		Click here for Coronavirus Charts of Los Angeles.
-		</a>
-	</div-->
+	
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 	{% for message in messages %}
@@ -19,12 +10,117 @@
 	{% endfor %}
 {% endif %}
 {% endwith %}
+<body onload=funcM() >
+<div class='mainDiv'>
+	<div class='Div1'>
+		<h4>Select country</h4>
+		<p>
+			<select id="country" name="country" onchange=funcCountry(this)>
+			  <option value="All" selected>All</option>
+			  <option value="US">United States</option>
+			</select> 
+		</p>
+	</div>
+	<!--a onclick= href=# id="calculate">Get states</a-->
+	<div class='Div2'>
+
+		<h4>Select state</h4>
+		<p>
+			<select id="state" name="state"  onchange=funcCounty(this) >
+			  <option value="" selected>select</option>
+			</select> 
+		</p> 
+
+	</div>
+	<div class='Div3'>
+		<h4>Select state</h4>
+		
+		<form action="{{ url_for('Corochart')}}" method="get">
+			
+			<select id="counties" name="counties">
+			  <option value="" selected>select</option>
+			</select>
+				<input type="submit" value="submit">
+			
+		</form>
+	</div>
+</div>
+<script type=text/javascript>
+
+function funcM(){
+		//alert('S');
+		// Get all countries here
+}
+
+function funcCountry(){
+	var countrySelected = document.getElementById("country").value;
+	console.log('in funcCountry', countrySelected);
+	let xhr = new XMLHttpRequest();
+    let url = "/_getStates?country=" + countrySelected ;
+    xhr.open("GET", url, true); 
+    xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4
+		    && xhr.status === 200) {
+		    //var res = JSON.parse( this.responseText)["res"];
+		    var res = this.responseText;
+		    // populate the state drop down
+			var statesList  = JSON.parse(res);
+			statesList = statesList.statesListNames;
+			console.log('statesList: ',statesList);// statelist needs to be put in select options
+
+			var options = [];
+			for (var i=0, l=statesList.length; i<l; i++)
+					{
+					options.push('<option value="'+statesList[i]+'">'+statesList[i]+'</option>');
+					}
+			console.log(options);
+			$("#state").html(options);
+				}
+			}
+		
+	xhr.send();
+	
+}
+
+function funcCounty(){
+	var stateSelected = document.getElementById("state").value;
+	console.log('in funcCounty', state);
+	
+	let xhr = new XMLHttpRequest();
+    let url = "/_getCounties?state=" + stateSelected ;
+    xhr.open("GET", url, true); 
+        
+    xhr.onreadystatechange = function () {
+		if (xhr.readyState === 4
+		    && xhr.status === 200) {
+		    //var res = JSON.parse( this.responseText)["res"];
+		    var res = this.responseText;
+		    // populate the county drop down
+			var countyList  = JSON.parse(res);
+			countyList = countyList.countyListNames;
+			console.log(countyList);// countylist needs to be put in select options
+
+			var options = [];
+			for (var i=0, l=countyList.length; i<l; i++)
+				{
+				options.push('<option value="'+countyList[i]+'">'+countyList[i]+'</option>');
+				}
+			console.log(options);
+			$("#counties").html(options);
+				}
+			}
+		
+	xhr.send();
+	}
+</script>
+<p>
 
     <footer style="color:#828e82; background-color: #fcfaf4; padding: 10px; text-align: center;">
 		<p>
-			This is built using Charts JS.
+			This is built using Flask and Charts JS.
 		</p>
 	</footer>
 {% endblock content %}
 
 
+</body>
